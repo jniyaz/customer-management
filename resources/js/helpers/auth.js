@@ -5,7 +5,7 @@ export function login(credentails) {
                 resolve(response.data);
             })
             .catch((error) => {
-                reject("Wrong email/password");
+                reject("Sorry, Wrong Credentails, Try again.");
             })
     })
 }

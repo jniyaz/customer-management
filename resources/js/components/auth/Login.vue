@@ -7,6 +7,13 @@
 
                     <div class="card-body">
                         <form @submit.prevent="authenticate">
+                            
+                            <div class="form-group row" v-if="authError">
+                                <span class="err-message" role="alert">
+                                    <strong>{{ authError }}</strong>
+                                </span>
+                            </div>
+
                             <div class="form-group row">
                                 <label for="email" class="col-md-4 col-form-label text-md-right">Email</label>
 
@@ -30,6 +37,8 @@
                                     </button>
                                 </div>
                             </div>
+                            
+                            
                         </form>
                     </div>
                 </div>
@@ -66,6 +75,11 @@
                     });
                 
             }
+        },
+        computed: {
+            authError() {
+                return this.$store.getters.authError;
+            }
         }
     }
 </script>
@@ -73,5 +87,12 @@
 <style scoped>
     #content{
         margin-top: 20px;
+    }
+    .err-message{
+        width: 100%;
+        margin-top: 0.25rem;
+        font-size: 80%;
+        color: #e3342f;
+        text-align: center;
     }
 </style>
