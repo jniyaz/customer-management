@@ -10,19 +10,28 @@
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <!-- Left Side Of Navbar -->
-                    <ul class="navbar-nav mr-auto">
-
-                    </ul>
-
-                    <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Login</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" href="/login">Logout</a>
-                        </li>
+                        <template v-if="!currentUser">
+                            <li class="nav-item">
+                                <router-link to="/login" class="nav-link">Login</router-link>
+                            </li>
+                            <li class="nav-item">
+                                <router-link to="/register" class="nav-link">Register</router-link>
+                            </li>
+                        </template>
+                        <template v-else>
+                            <li class="nav-item">
+                                <router-link to="/customers" class="nav-link">Customers</router-link>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <a id="navbarDropDown" class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false" aria-haspopup="true">
+                                    {{ currentUser.name }} <span class="caret"></span>
+                                </a>
+                                <div class="dropdown-menu" aria-labelledby="navbarDropDown">
+                                    <a href="#!" class="dropdown-item" @click.prevent="logout">Logout</a>
+                                </div>
+                            </li>
+                        </template>
                     </ul>
                 </div>
             </div>
@@ -32,6 +41,17 @@
 
 <script>
     export default {
-        name: 'Header',
+        name: 'app-header',
+        methods: {
+            logout() {
+                this.$store.commit('logout');
+                this.$router.push('/');
+            }
+        },
+        computed: {
+            currentUser() {
+                return this.$store.getters.currentUser;
+            }
+        }
     }
 </script>
