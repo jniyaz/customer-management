@@ -6,9 +6,8 @@ import VueRouter from 'vue-router';
 import Vuex from 'vuex';
 import {routes} from './routes';
 import StoreData from './store';
-import MainApp from './components/MainApp.vue';
-import Axios from 'axios';
 import {initialize} from './helpers/general';
+import MainApp from './components/MainApp.vue';
 
 Vue.use(VueRouter);
 Vue.use(Vuex);
