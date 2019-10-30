@@ -2,9 +2,7 @@
     <div id="header">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="/">
-                    App Name
-                </a>
+                <router-link to="/" class="navbar-brand">App</router-link>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="">
                     <span class="navbar-toggler-icon"></span>
                 </button>
@@ -20,6 +18,9 @@
                             </li>
                         </template>
                         <template v-else>
+                            <li class="nav-item">
+                                <router-link to="/" class="nav-link">Dashboard</router-link>
+                            </li>
                             <li class="nav-item">
                                 <router-link to="/customers" class="nav-link">Customers</router-link>
                             </li>

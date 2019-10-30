@@ -2,12 +2,11 @@
     <div id="content">
         <div class="container">
             <div class="row justify-content-center">
-                <div class="col-md-8">
+                <div class="col-md-10">
                     <div class="card">
-                        <div class="card-header">Home</div>
-
+                        <div class="card-header">Dashboard</div>
                         <div class="card-body">
-                            {{ welcome }}
+                            <h6 class="text-center">{{ welcome }}..</h6>
                         </div>
                     </div>
                 </div>
@@ -21,7 +20,7 @@
         name: 'Home',
         computed: {
             welcome() {
-                return this.$store.getters.welcome;
+                return this.$store.state.welcome;
             }
         }
     }

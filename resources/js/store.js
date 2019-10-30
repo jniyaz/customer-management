@@ -1,10 +1,11 @@
 import { getLocalUser } from './helpers/auth';
-import { stat } from 'fs';
+import Axios from 'axios';
 
 const user = getLocalUser();
 
 export default {
     state: {
+        welcome: "Welcome to the App",
         currentUser: user,
         isLoggedIn: !! user,
         loading: false,
@@ -49,11 +50,24 @@ export default {
             localStorage.removeItem('user');
             state.isLoggedIn = false;
             state.currentUser = null;
+        },
+        updateCustomers(state, payload) {
+            state.customers = payload;
         }
     },
     actions: {
         login(context) {
             context.commit("login");
+        },
+        getCustomers(context) {
+            Axios.get('/api/customers', {
+                headers: {
+                    "Authorization": `Bearer ${context.state.currentUser.token}`
+                }
+            })
+            .then((res) => {
+                context.commit('updateCustomers', res.data.customers.data);
+            })
         }
     }
 }
