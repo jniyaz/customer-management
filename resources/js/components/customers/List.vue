@@ -1,5 +1,8 @@
 <template>
     <div>
+        <div class="btn-wrapper text-right">
+            <router-link to='/customers/new' class="btn btn-primary btn-sm">New</router-link>
+        </div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -21,7 +24,7 @@
                         <td>{{ customer.email }}</td>
                         <td>{{ customer.phone }}</td>
                         <td>
-                            <router-link :to="`/customers/${customer.id}`">View</router-link>
+                            <router-link class="btn btn-sm btn-warning" :to="`/customers/${customer.id}`">View</router-link>
                         </td>
                     </tr>
                 </template>
@@ -45,4 +48,7 @@
 </script>
 
 <style scoped>
+.btn-wrapper{
+    margin-bottom:10px;
+}
 </style>
