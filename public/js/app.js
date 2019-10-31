@@ -57405,7 +57405,10 @@ function initialize(store, router) {
 
     return Promise.reject(error);
   });
-  axios.defaults.headers.common["Authorization"] = "Bearer ".concat(store.getters.currentUser.token);
+
+  if (store.getters.currentUser != null) {
+    axios.defaults.headers.common["Authorization"] = "Bearer ".concat(store.getters.currentUser.token);
+  }
 }
 
 /***/ }),
