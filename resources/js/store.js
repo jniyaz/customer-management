@@ -1,5 +1,4 @@
 import { getLocalUser } from './helpers/auth';
-import Axios from 'axios';
 
 const user = getLocalUser();
 
@@ -60,11 +59,7 @@ export default {
             context.commit("login");
         },
         getCustomers(context) {
-            Axios.get('/api/customers', {
-                headers: {
-                    "Authorization": `Bearer ${context.state.currentUser.token}`
-                }
-            })
+            axios.get('/api/customers')
             .then((res) => {
                 context.commit('updateCustomers', res.data.customers.data);
             })

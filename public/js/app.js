@@ -1967,6 +1967,10 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: 'list',
   mounted: function mounted() {
+    if (this.customers.length) {
+      return;
+    }
+
     this.$store.dispatch('getCustomers');
   },
   computed: {
@@ -2100,11 +2104,7 @@ __webpack_require__.r(__webpack_exports__);
       } // send the data to BE api
 
 
-      axios.post('/api/customers/new', this.$data.customer, {
-        headers: {
-          "Authorization": "Bearer ".concat(this.currentUser.token)
-        }
-      }).then(function (response) {
+      axios.post('/api/customers/new', this.$data.customer).then(function (response) {
         _this.$router.push('/customers');
       });
     },
@@ -2194,17 +2194,22 @@ __webpack_require__.r(__webpack_exports__);
   created: function created() {
     var _this = this;
 
-    axios.get("/api/customers/".concat(this.$route.params.id), {
-      headers: {
-        "Authorization": "Bearer ".concat(this.currentUser.token)
-      }
-    }).then(function (res) {
-      _this.customer = res.data.customer;
-    });
+    if (this.customers.length) {
+      this.customer = this.customers.find(function (customer) {
+        return customer.id == _this.$route.params.id;
+      });
+    } else {
+      axios.get("/api/customers/".concat(this.$route.params.id)).then(function (res) {
+        _this.customer = res.data.customer;
+      });
+    }
   },
   computed: {
     currentUser: function currentUser() {
       return this.$store.getters.currentUser;
+    },
+    customers: function customers() {
+      return this.$store.getters.customers;
     }
   }
 });
@@ -57400,6 +57405,10 @@ function initialize(store, router) {
 
     return Promise.reject(error);
   });
+
+  if (store.getters.currentUser != null) {
+    axios.defaults.headers.common["Authorization"] = "Bearer ".concat(store.getters.currentUser.token);
+  }
 }
 
 /***/ }),
@@ -57465,9 +57474,6 @@ var routes = [{
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _helpers_auth__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./helpers/auth */ "./resources/js/helpers/auth.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_1__);
-
 
 var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -57528,11 +57534,7 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
       context.commit("login");
     },
     getCustomers: function getCustomers(context) {
-      axios__WEBPACK_IMPORTED_MODULE_1___default.a.get('/api/customers', {
-        headers: {
-          "Authorization": "Bearer ".concat(context.state.currentUser.token)
-        }
-      }).then(function (res) {
+      axios.get('/api/customers').then(function (res) {
         context.commit('updateCustomers', res.data.customers.data);
       });
     }
@@ -57559,8 +57561,8 @@ var user = Object(_helpers_auth__WEBPACK_IMPORTED_MODULE_0__["getLocalUser"])();
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /mnt/d/Work-Env/Ubuntu/php-projects/l58/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /mnt/d/Work-Env/Ubuntu/php-projects/l58/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /mnt/c/WorkZone/code/Laravel/customers/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /mnt/c/WorkZone/code/Laravel/customers/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
