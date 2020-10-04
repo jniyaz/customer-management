@@ -26,8 +26,7 @@ class CreateCustomerRequest extends FormRequest
         return [
             'name' => 'required|min:3',
             'email' => 'required|email',
-            'phone' => 'required|min:10|numeric',
-            'website' => 'required|url'
+            'phone' => 'required|min:10|numeric'
         ];
     }
 }
